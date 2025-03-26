@@ -1,0 +1,23 @@
+version: '3'
+services:
+  rserver-neutron:
+    image: datashield/rserver-neutron:latest
+    #build: .
+    ports:
+      - ${PORT}:8085
+    environment:
+      - RSERVER_ADMINISTRATOR_NAME=${RSERVER_ADMINISTRATOR_NAME}
+      - RSERVER_ADMINISTRATOR_PASSWORD=${RSERVER_ADMINISTRATOR_PASSWORD}
+      - RSERVER_MANAGER_NAME=${RSERVER_MANAGER_NAME}
+      - RSERVER_MANAGER_PASSWORD=${RSERVER_MANAGER_PASSWORD}
+      - RSERVER_USER_NAME=${RSERVER_USER_NAME}
+      - RSERVER_USER_PASSWORD=${RSERVER_USER_PASSWORD}
+      - RSERVER_ID=${RSERVER_ID}
+      - RSERVER_CLUSTER=${RSERVER_CLUSTER}
+      - RSERVER_TAGS=${RSERVER_TAGS}
+      # for self-registration
+      #- RSERVER_SERVER=${RSERVER_SERVER}
+      #- RSERVER_OPAL_SERVER=${RSERVER_OPAL_SERVER}
+      #- RSERVER_OPAL_TOKEN=${RSERVER_OPAL_TOKEN}
+    volumes:
+      - ${PROJECT_HOME}/rserver_home:/srv

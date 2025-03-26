@@ -1,0 +1,30 @@
+2439.9 ERROR: dependency ‘haven’ is not available for package ‘mitml’
+2439.9 * removing ‘/usr/local/lib/R/site-library/mitml’
+2439.9 ERROR: dependency ‘mitml’ is not available for package ‘mice’
+2439.9 * removing ‘/usr/local/lib/R/site-library/mice’
+2439.9 
+2439.9 The downloaded source packages are in
+2439.9 	‘/tmp/downloaded_packages’
+2439.9 Error: installation of package ‘mice’ had non-zero exit status
+2439.9 In addition: Warning messages:
+2439.9 1: package ‘splines’ is a base package, and should not be updated 
+2439.9 2: In install.packages(pkgs, ...) :
+2439.9   installation of package ‘haven’ had non-zero exit status
+2439.9 3: In install.packages(pkgs, ...) :
+2439.9   installation of package ‘mitml’ had non-zero exit status
+2439.9 4: In install.packages(pkgs, ...) :
+2439.9   installation of package ‘mice’ had non-zero exit status
+------
+
+ 1 warning found (use docker --debug to expand):
+ - JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 27)
+Dockerfile:18
+--------------------
+  16 |     # Install dsBase package
+  17 |     ENV DSBASE_VERSION="6.3.1"
+  18 | >>> RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor splines gamlss gamlss.dist mice childsds --repos "https://cloud.r-project.org/"
+  19 |     RUN installGithub.r "datashield/dsBase@${DSBASE_VERSION}"
+  20 |     
+--------------------
+ERROR: failed to solve: process "/bin/sh -c install2.r --error RANN stringr lme4 dplyr reshape2 polycor splines gamlss gamlss.dist mice childsds --repos \"https://cloud.r-project.org/\"" did not complete successfully: exit code: 1
+make: *** [Makefile:12: build-image] Error 1
