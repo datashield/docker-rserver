@@ -15,9 +15,11 @@ RUN R -q -e "update.packages()"
 
 # Install system libraries
 
+RUN apt-get install zlib1g-dev libssl-dev libcurl4-openssl-dev -y
 
 # Install R packages
-RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor splines gamlss gamlss.dist childsds --repos "https://cloud.r-project.org/"
+RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor gamlss gamlss.dist childsds --repos "https://cloud.r-project.org/"
+RUN install2.r --error httr DescTools childsds --repos "https://cloud.r-project.org/"
 RUN install2.r --error haven mitml mice --repos "https://cloud.r-project.org/"
 
 # Install dsBase package
