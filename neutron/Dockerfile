@@ -9,17 +9,20 @@ FROM rocker/r-ver:4.4.3
 
 # Update of packages
 RUN apt-get update -y
-RUN apt-get upgrade -y
+# RUN apt-get upgrade -y
 RUN apt-get install cmake -y
-RUN R -q -e "update.packages()"
+# RUN R -q -e "update.packages()"
 
 # Install system libraries
 
 RUN apt-get install zlib1g-dev libssl-dev libcurl4-openssl-dev -y
 
+# RUN apt-get install -qq libxml2-dev libcurl4-openssl-dev libssl-dev libgsl-dev libgit2-dev -y
+# RUN apt-get install -qq libharfbuzz-dev libfribidi-dev libmagick++-dev -y
+
 # Install R packages
-RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor gamlss gamlss.dist childsds --repos "https://cloud.r-project.org/"
-RUN install2.r --error httr DescTools childsds --repos "https://cloud.r-project.org/"
+RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor gamlss gamlss.dist --repos "https://cloud.r-project.org/"
+RUN install2.r --error httr DescTools remotes childsds --repos "https://cloud.r-project.org/"
 RUN install2.r --error haven mitml mice --repos "https://cloud.r-project.org/"
 
 # Install dsBase package
