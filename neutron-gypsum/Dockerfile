@@ -1,42 +1,44 @@
 #
-# Rserver R Server Dockerfile with DataSHIELD Neutron profile
+# Rserver R Server Dockerfile with DataSHIELD Neutron Gypsum profile
 #
-# https://github.com/datashield/docker-rserver-neutron
+# https://github.com/datashield/docker-rserver-neutron-gypsum
 #
 
-# R 4.4.3
-FROM datashield/docker-rserver:4.4.3
+FROM datashield/rserver-neutron:latest
 
-ENV DSMEDIATION_VERSION=0.0.3
-ENV DSEXPOSOME_VERSION=2.0.9
-ENV DSTIDYVERSE_VERSION=v1.0.4
-ENV DSOMICS_VERSION=v1.0.18-2
-ENV DSMTL_VERSION=0.9.9
-ENV DSSURVIVAL_VERSION=v2.1.3
-ENV DSBASE_VERSION=6.3.1
-
-ENV ROCK_LIB=/var/lib/rock/R/library
-
-# Update of packages
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN R -q -e "update.packages()"
+RUN ln -s /usr/local/lib/R/site-library/littler/examples/installBioc.r /usr/local/bin/installBioc.r
 
 # Install new R packages
 # dsMediation
-RUN Rscript -e "remotes::install_github('datashield/dsMediation', ref = '$DSMEDIATION_VERSION', repos = c('https://cloud.r-project.org', 'https://cran.datashield.org'), upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSMEDIATION_VERSION=0.0.3
+RUN installGithub.r "datashield/dsMediation@${DSMEDIATION_VERSION}"
 # dsMTLBase
-RUN Rscript -e "remotes::install_github('transbioZI/dsMTLBase', ref = '$DSMTL_VERSION', dependencies = TRUE, upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSMTL_VERSION=0.9.9
+RUN installGithub.r "transbioZI/dsMTLBase@${DSMTL_VERSION}"
 # dsSurvival
-RUN Rscript -e "remotes::install_github('datashield/dsSurvival', ref = '$DSSURVIVAL_VERSION', dependencies = TRUE, upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSSURVIVAL_VERSION=v2.1.3
+RUN installGithub.r "datashield/dsSurvival@${DSSURVIVAL_VERSION}"
 # dsTidyverse
-RUN Rscript -e "remotes::install_github('molgenis/ds-tidyverse', ref = '$DSTIDYVERSE_VERSION', dependencies = TRUE, upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSTIDYVERSE_VERSION=v1.0.4
+RUN installGithub.r "molgenis/ds-tidyverse@${DSTIDYVERSE_VERSION}"
 # dsExposome
-RUN Rscript -e "BiocManager::install(c('bumphunter', 'missMethyl', 'rexposome'), update = FALSE, ask = FALSE, lib = '$ROCK_LIB')" \
- && Rscript -e "remotes::install_github('isglobal-brge/dsExposome', ref = '$DSEXPOSOME_VERSION', repos = c('https://cloud.r-project.org', 'https://cran.datashield.org'), upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSEXPOSOME_VERSION=2.0.9
+RUN installBioc.r 'bumphunter'
+RUN installBioc.r 'missMethyl'
+RUN installBioc.r 'rexposome'
+RUN installGithub.r "isglobal-brge/dsExposome@${DSEXPOSOME_VERSION}"
 # dsOmics
-RUN Rscript -e "BiocManager::install(c('Biobase', 'SNPRelate', 'GENESIS', 'GWASTools', 'GenomicRanges', 'SummarizedExperiment', 'DESeq2', 'edgeR', 'MEAL'), update = FALSE, ask = FALSE, lib = '$ROCK_LIB')" \
- && Rscript -e "remotes::install_github('isglobal-brge/dsOmics', ref = '$DSOMICS_VERSION', upgrade = FALSE, lib = '$ROCK_LIB')"
+ENV DSOMICS_VERSION=v1.0.18-2
+RUN installBioc.r 'Biobase'
+RUN installBioc.r 'SNPRelate'
+RUN installBioc.r 'GENESIS'
+RUN installBioc.r 'GWASTools'
+RUN installBioc.r 'GenomicRanges'
+RUN installBioc.r 'SummarizedExperiment'
+RUN installBioc.r 'DESeq2'
+RUN installBioc.r 'edgeR'
+RUN installBioc.r 'MEAL'
+RUN installGithub.r "isglobal-brge/dsOmics@${DSOMICS_VERSION}"
 # dsBase
-RUN Rscript -e "remotes::install_github('datashield/dsBase', ref = '$DSBASE_VERSION', dependencies = TRUE, upgrade = FALSE, lib = '$ROCK_LIB')" && \
-  chown -R rock $ROCK_LIB
+ENV DSBASE_VERSION=6.3.1
+RUN installGithub.r "datashield/dsBase@${DSBASE_VERSION}"
