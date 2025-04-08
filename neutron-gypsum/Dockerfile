@@ -6,6 +6,9 @@
 
 FROM datashield/rserver-neutron:latest
 
+# Install BiocManager dependencies
+ENV BIOCMANAGER_VERSION="v1.30.25"
+RUN installGithub.r "Bioconductor/BiocManager@${BIOCMANAGER_VERSION}"
 RUN ln -s /usr/local/lib/R/site-library/littler/examples/installBioc.r /usr/local/bin/installBioc.r
 
 # Install new R packages
