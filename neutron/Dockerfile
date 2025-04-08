@@ -31,8 +31,8 @@ RUN installGithub.r "datashield/dsBase@${DSBASE_VERSION}"
 
 # Install new R packages
 # dsBase
-ENV RSERVER_VERSION="0.1.2"
-RUN install2.r --error "https://registry.molgenis.org/repository/r-hosted/src/contrib/MolgenisRserve_${RSERVER_VERSION}.tar.gz" --repos NULL
+ENV RSERVER_VERSION="v0.1.2"
+RUN installGithub.r "molgenis/Rserve@${RSERVER_VERSION}"
 
 # Startup the RServer
 CMD R -e "MolgenisRserve::Rserve(debug=${DEBUG}, args='--vanilla --RS-set remote=enable --RS-set auth=disable --RS-set daemon=disable')"
