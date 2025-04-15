@@ -25,6 +25,10 @@ RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor gamlss gamlss.di
 RUN install2.r --error httr DescTools remotes childsds --repos "https://cloud.r-project.org/"
 RUN install2.r --error haven mitml mice --repos "https://cloud.r-project.org/"
 
+# Install Resourcer package
+ENV RESOURCER_VERSION="1.4.0"
+RUN installGithub.r "obiba/resourcer@${RESOURCER_VERSION}"
+
 # Install dsBase package
 ENV DSBASE_VERSION="6.3.1"
 RUN installGithub.r "datashield/dsBase@${DSBASE_VERSION}"
