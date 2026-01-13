@@ -4,8 +4,8 @@
 # https://github.com/datashield/docker-rserver-neutron
 #
 
-# R 4.4.3
-FROM rocker/r-ver:4.4.3
+# R 4.5.0
+FROM rocker/r-ver:4.5.0
 
 # Update of packages
 RUN apt-get update -y
@@ -23,7 +23,7 @@ RUN apt-get install zlib1g-dev libssl-dev libcurl4-openssl-dev -y
 # Install R packages
 RUN install2.r --error RANN stringr lme4 dplyr reshape2 polycor gamlss gamlss.dist --repos "https://cloud.r-project.org/"
 RUN install2.r --error httr DescTools remotes childsds --repos "https://cloud.r-project.org/"
-RUN install2.r --error haven mitml mice --repos "https://cloud.r-project.org/"
+RUN install2.r --error jomo haven mitml mice --repos "https://cloud.r-project.org/"
 
 # Install Resourcer package
 ENV RESOURCER_VERSION="1.4.0"
@@ -35,8 +35,9 @@ RUN installGithub.r "datashield/dsBase@${DSBASE_VERSION}"
 
 # Install new R packages
 # dsBase
-ENV RSERVER_VERSION="v0.1.2"
-RUN installGithub.r "molgenis/Rserve@${RSERVER_VERSION}"
+ENV RSERVER_VERSION="master"
+RUN installGithub.r "StuartWheater/Rserve@${RSERVER_VERSION}"
+# RUN install2.r --error "https://registry.molgenis.org/repository/r-hosted/src/contrib/MolgenisRserve_${RSERVER_VERSION}.tar.gz" --repos NULL
 
 # Startup the RServer
 CMD R -e "MolgenisRserve::Rserve(debug=${DEBUG}, args='--vanilla --RS-set remote=enable --RS-set auth=disable --RS-set daemon=disable')"
