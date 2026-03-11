@@ -1,6 +1,6 @@
 services:
   rserver-devel:
-    image: datashield/rserver-devel:latest
+    image: datashield/rserver_devel:latest
     #build: .
     ports:
       - ${PORT}:6311

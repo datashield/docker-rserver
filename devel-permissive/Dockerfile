@@ -5,7 +5,7 @@
 #
 
 # R 4.5.2, RServe
-FROM datashield/rserver-devel:latest
+FROM datashield/rserver_devel:latest
 
 ENV DSBASE_VERSION=v6.3.4-permissive
 

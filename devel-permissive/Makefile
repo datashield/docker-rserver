@@ -4,7 +4,7 @@
 
 docker_compose_file=docker-compose.yml
 no_cache=true
-name=datashield/rserver-devel-permissive
+name=datashield/rserver_devel-permissive
 tag=latest
 
 # Build Docker image

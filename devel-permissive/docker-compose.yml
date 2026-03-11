@@ -1,6 +1,6 @@
 services:
   rserver-devel-permissive:
-    image: datashield/rserver-devel-permissive:latest
+    image: datashield/rserver_devel-permissive:latest
     #build: .
     ports:
       - ${PORT}:6311
